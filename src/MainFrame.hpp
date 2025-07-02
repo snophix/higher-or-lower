@@ -19,7 +19,7 @@ constexpr std::string MESSAGE_LOSE = "You lost!";
 constexpr std::string MESSAGE_WIN = "You won!";
 
 constexpr std::string SUBMESSAGE_TRIES = "{} tries left";
-constexpr std::string SUBMESSAGE_TRY = " try left";
+constexpr std::string SUBMESSAGE_TRY = "{} try left";
 constexpr std::string SUBMESSAGE_REVEAL = "It was {}";
 
 constexpr std::string BUTTON_GUESS = "Guess";
@@ -49,7 +49,7 @@ private:
 
     void reset_game();
     void finish_game(bool wonGame);
-    void on_mainButton_pressed();
+    void on_mainButton_pressed(wxCommandEvent& event);
 
 public:
     MainFrame();

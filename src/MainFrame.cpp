@@ -8,12 +8,13 @@ int random_int(int min, int max);
 
 
 
-MainFrame::MainFrame() : wxFrame(NULL, wxID_ANY, "Higher Or Lower", wxDefaultPosition, wxSize(300, 250), wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE)) {
+MainFrame::MainFrame() : wxFrame(NULL, wxID_ANY, "Higher Or Lower", wxDefaultPosition, wxSize(500, 500), wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE)) {
     // the main panel that manages evrything
     mainPanel = new wxPanel(this);
 
     setup_widgets();
     setup_sizers();
+    setup_binds();
 
     reset_game();
 }
@@ -21,7 +22,7 @@ MainFrame::MainFrame() : wxFrame(NULL, wxID_ANY, "Higher Or Lower", wxDefaultPos
 
 void MainFrame::setup_widgets() {
     // the BIG message text
-    messageText = new wxStaticText(mainPanel, wxID_ANY, "Let's play!");
+    messageText = new wxStaticText(mainPanel, wxID_ANY, MESSAGE_HIGHER);
     wxFont theFont = wxFont().Bold();
     theFont.SetPointSize(40);
     messageText->SetFont(theFont);
@@ -56,7 +57,7 @@ void MainFrame::setup_sizers() {
 
 
 void MainFrame::setup_binds(){
-
+    mainButton->Bind(wxEVT_BUTTON, &MainFrame::on_mainButton_pressed, this);
 }
 
 
@@ -72,6 +73,7 @@ void MainFrame::reset_game(){
     numberPicherSpinCtrl->SetValue(0);
     numberPicherSpinCtrl->Show();
     mainButton->SetLabel(BUTTON_GUESS);
+    mainPanel->Layout();
 }
 
 
@@ -88,6 +90,47 @@ void MainFrame::finish_game(bool wonGame){
         SetTitle(TITLE_BASE + TITLE_ADD_LOSE);
         messageText->SetLabel(MESSAGE_LOSE);
     }
+    mainPanel->Layout();
+}
+
+
+void MainFrame::on_mainButton_pressed(wxCommandEvent& event){
+    // are we gaming ??
+    if (!isGaming){
+        reset_game();
+        return;
+    }// oh so we are gaming
+
+    // did you guess correctly
+    int guessedNumber = numberPicherSpinCtrl->GetValue();
+    if (guessedNumber == randomNumberToGuess){
+        finish_game(true);
+        return;
+    }
+
+    // well did you run out of tries
+    triesLeft -= 1;
+    if (triesLeft <= 0){
+        finish_game(false);
+        return;
+    }
+
+    // now we tell how much tries he has left
+    if (triesLeft > 1){
+        submessageText->SetLabel(std::format(SUBMESSAGE_TRIES, triesLeft));
+    } else {
+        submessageText->SetLabel(std::format(SUBMESSAGE_TRY, triesLeft));
+    }
+
+    // now we tell if it is higher or lower
+    if (guessedNumber < randomNumberToGuess){
+        messageText->SetLabel(MESSAGE_HIGHER);
+        SetTitle(TITLE_HIGHER);
+    } else {
+        messageText->SetLabel(MESSAGE_LOWER);
+        SetTitle(TITLE_LOWER);
+    }
+    mainPanel->Layout();
 }
 
 
