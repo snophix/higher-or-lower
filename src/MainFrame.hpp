@@ -31,6 +31,12 @@ constexpr int NUMBER_OF_TRIES = 5;
 
 
 
+enum MenuIDs{
+    NEW_GAME,
+    REPORT_ISSUE
+};
+
+
 class MainFrame : public wxFrame{
 private:
     bool isGaming;
@@ -45,6 +51,7 @@ private:
 
     void setup_widgets();
     void setup_sizers();
+    void setup_menu_bar();
     void setup_binds();
 
     void reset_game();

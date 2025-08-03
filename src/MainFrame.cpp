@@ -14,6 +14,7 @@ MainFrame::MainFrame() : wxFrame(NULL, wxID_ANY, "Higher Or Lower", wxDefaultPos
 
     setup_widgets();
     setup_sizers();
+    setup_menu_bar();
     setup_binds();
 
     reset_game();
@@ -53,6 +54,23 @@ void MainFrame::setup_sizers() {
 
     mainPanel->SetSizer(mainGridSizer);
     mainGridSizer->SetSizeHints(this);
+}
+
+
+void MainFrame::setup_menu_bar(){
+    wxMenuBar* menuBar = new wxMenuBar();
+
+    wxMenu* gameMenu = new wxMenu();
+    gameMenu->Append(MenuIDs::NEW_GAME, "New Game");
+
+    wxMenu* helpMenu = new wxMenu();
+    helpMenu->Append(MenuIDs::REPORT_ISSUE, "Report Issue");
+    helpMenu->Append(wxID_ABOUT);
+
+    menuBar->Append(gameMenu, "Game");
+    menuBar->Append(helpMenu, "Help");
+
+    SetMenuBar(menuBar);
 }
 
 
