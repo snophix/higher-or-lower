@@ -1,4 +1,6 @@
 #include "MainFrame.hpp"
+#include "wx/aboutdlg.h"
+#include "wx/generic/aboutdlgg.h"
 #include <wx/wx.h>
 #include <random>
 #include <format>
@@ -11,6 +13,15 @@ int random_int(int min, int max);
 MainFrame::MainFrame() : wxFrame(NULL, wxID_ANY, "Higher Or Lower", wxDefaultPosition, wxSize(500, 500), wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE)) {
     // the main panel that manages evrything
     mainPanel = new wxPanel(this);
+
+    mainIcons.AddIcon("../res/1024.png");
+    mainIcons.AddIcon("../res/512.png");
+    mainIcons.AddIcon("../res/256.png");
+    mainIcons.AddIcon("../res/128.png");
+    mainIcons.AddIcon("../res/64.png");
+    mainIcons.AddIcon("../res/32.png");
+    mainIcons.AddIcon("../res/16.png");
+    SetIcons(mainIcons);
 
     setup_widgets();
     setup_sizers();
@@ -76,6 +87,7 @@ void MainFrame::setup_menu_bar(){
 
 void MainFrame::setup_binds(){
     mainButton->Bind(wxEVT_BUTTON, &MainFrame::on_mainButton_pressed, this);
+    this->Bind(wxEVT_MENU, &MainFrame::on_about, this, wxID_ABOUT);
 }
 
 
@@ -149,6 +161,16 @@ void MainFrame::on_mainButton_pressed(wxCommandEvent& event){
         SetTitle(TITLE_LOWER);
     }
     mainPanel->Layout();
+}
+
+
+void MainFrame::on_about(wxCommandEvent& event){
+    wxAboutDialogInfo aboutDialog;
+    //aboutDialog.SetName();
+    aboutDialog.SetVersion("Beta 1.1.0");
+    aboutDialog.SetDescription("A simple game to pass time.");
+    aboutDialog.SetCopyright("(C) 2025 Moulay Ali Balouz");
+    wxAboutBox(aboutDialog);
 }
 
 

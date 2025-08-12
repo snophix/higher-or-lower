@@ -1,4 +1,6 @@
 #pragma once
+#include "wx/event.h"
+#include "wx/iconbndl.h"
 #include <wx/wx.h>
 #include <wx/spinctrl.h>
 #include <string>
@@ -43,6 +45,8 @@ private:
     int randomNumberToGuess;
     int triesLeft;
 
+    wxIconBundle mainIcons;
+
     wxPanel* mainPanel;
     wxStaticText* messageText;
     wxStaticText* submessageText;
@@ -57,6 +61,7 @@ private:
     void reset_game();
     void finish_game(bool wonGame);
     void on_mainButton_pressed(wxCommandEvent& event);
+    void on_about(wxCommandEvent& event);
 
 public:
     MainFrame();
