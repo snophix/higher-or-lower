@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include <random>
 #include <format>
+#include <wx/utils.h>
 
 
 int random_int(int min, int max);
@@ -14,21 +15,27 @@ MainFrame::MainFrame() : wxFrame(NULL, wxID_ANY, "Higher Or Lower", wxDefaultPos
     // the main panel that manages evrything
     mainPanel = new wxPanel(this);
 
-    mainIcons.AddIcon("../res/1024.png");
-    mainIcons.AddIcon("../res/512.png");
-    mainIcons.AddIcon("../res/256.png");
-    mainIcons.AddIcon("../res/128.png");
-    mainIcons.AddIcon("../res/64.png");
-    mainIcons.AddIcon("../res/32.png");
-    mainIcons.AddIcon("../res/16.png");
-    SetIcons(mainIcons);
-
+    setup_resources();
     setup_widgets();
     setup_sizers();
     setup_menu_bar();
     setup_binds();
 
     reset_game();
+}
+
+
+void MainFrame::setup_resources() {
+    mainIcons.AddIcon("../res/1024.png");
+    mainIcons.AddIcon("../res/512.png");
+    mainIcons.AddIcon("../res/256.png");
+    mainIcons.AddIcon("../res/128.png");
+    mainIcons.AddIcon("../res/64.png");
+    mainIcons.AddIcon("../res/48.png");
+    mainIcons.AddIcon("../res/32.png");
+    mainIcons.AddIcon("../res/24.png");
+    mainIcons.AddIcon("../res/16.png");
+    SetIcons(mainIcons);
 }
 
 
@@ -88,6 +95,7 @@ void MainFrame::setup_menu_bar(){
 void MainFrame::setup_binds(){
     mainButton->Bind(wxEVT_BUTTON, &MainFrame::on_mainButton_pressed, this);
     this->Bind(wxEVT_MENU, &MainFrame::on_about, this, wxID_ABOUT);
+    this->Bind(wxEVT_MENU, &MainFrame::on_report_issue, this, MenuIDs::REPORT_ISSUE);
 }
 
 
@@ -169,8 +177,13 @@ void MainFrame::on_about(wxCommandEvent& event){
     //aboutDialog.SetName();
     aboutDialog.SetVersion("Beta 1.1.0");
     aboutDialog.SetDescription("A simple game to pass time.");
-    aboutDialog.SetCopyright("(C) 2025 Moulay Ali Balouz");
+    aboutDialog.SetCopyright("(C) 2025 Moulay Ali \"Snophix\" Balouz");
     wxAboutBox(aboutDialog);
+}
+
+
+void MainFrame::on_report_issue(wxCommandEvent& event){
+    wxLaunchDefaultBrowser("https://github.com/snophix/higher-or-lower/issues/new");
 }
 
 

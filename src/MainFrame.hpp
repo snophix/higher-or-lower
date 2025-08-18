@@ -53,6 +53,7 @@ private:
     wxSpinCtrl* numberPicherSpinCtrl;
     wxButton* mainButton;
 
+    void setup_resources();
     void setup_widgets();
     void setup_sizers();
     void setup_menu_bar();
@@ -62,6 +63,7 @@ private:
     void finish_game(bool wonGame);
     void on_mainButton_pressed(wxCommandEvent& event);
     void on_about(wxCommandEvent& event);
+    void on_report_issue(wxCommandEvent& event);
 
 public:
     MainFrame();
