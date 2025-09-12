@@ -32,6 +32,10 @@ constexpr int RANDOM_MAX = 100;
 constexpr int NUMBER_OF_TRIES = 5;
 
 
+constexpr std::string RES_TESTING = "../res/";
+constexpr std::string iconsFilenames[9] = {"1024.png", "512.png", "256.png", "128.png", "64.png", "48.png", "32.png", "24.png", "16.png"};
+
+
 
 enum MenuIDs{
     NEW_GAME,
@@ -62,6 +66,7 @@ private:
     void reset_game();
     void finish_game(bool wonGame);
     void on_mainButton_pressed(wxCommandEvent& event);
+    void on_new_game(wxCommandEvent& event);
     void on_about(wxCommandEvent& event);
     void on_report_issue(wxCommandEvent& event);
 

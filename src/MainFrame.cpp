@@ -5,6 +5,7 @@
 #include <random>
 #include <format>
 #include <wx/utils.h>
+#include "NewGameDialog.hpp"
 
 
 int random_int(int min, int max);
@@ -26,15 +27,9 @@ MainFrame::MainFrame() : wxFrame(NULL, wxID_ANY, "Higher Or Lower", wxDefaultPos
 
 
 void MainFrame::setup_resources() {
-    mainIcons.AddIcon("../res/1024.png");
-    mainIcons.AddIcon("../res/512.png");
-    mainIcons.AddIcon("../res/256.png");
-    mainIcons.AddIcon("../res/128.png");
-    mainIcons.AddIcon("../res/64.png");
-    mainIcons.AddIcon("../res/48.png");
-    mainIcons.AddIcon("../res/32.png");
-    mainIcons.AddIcon("../res/24.png");
-    mainIcons.AddIcon("../res/16.png");
+    for (std::string filename : iconsFilenames){
+        mainIcons.AddIcon(RES_TESTING + filename);
+    }
     SetIcons(mainIcons);
 }
 
@@ -96,6 +91,7 @@ void MainFrame::setup_binds(){
     mainButton->Bind(wxEVT_BUTTON, &MainFrame::on_mainButton_pressed, this);
     this->Bind(wxEVT_MENU, &MainFrame::on_about, this, wxID_ABOUT);
     this->Bind(wxEVT_MENU, &MainFrame::on_report_issue, this, MenuIDs::REPORT_ISSUE);
+    this->Bind(wxEVT_MENU, &MainFrame::on_new_game, this, MenuIDs::NEW_GAME);
 }
 
 
@@ -169,6 +165,11 @@ void MainFrame::on_mainButton_pressed(wxCommandEvent& event){
         SetTitle(TITLE_LOWER);
     }
     mainPanel->Layout();
+}
+
+
+void MainFrame::on_new_game(wxCommandEvent& event){
+    NewGameDialog NewGameDialog;
 }
 
 

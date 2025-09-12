@@ -19,7 +19,8 @@ set(wxUSE_LIBTIFF OFF)
 set(wxUSE_LIBWEBP OFF)
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/App.cpp
-    ${PROJECT_SOURCE_DIR}/MainFrame.cpp)
+    ${PROJECT_SOURCE_DIR}/MainFrame.cpp
+    ${PROJECT_SOURCE_DIR}/NewGameDialog.cpp)
 
 add_subdirectory(libs/wxWidgets-3.3.0)
 
