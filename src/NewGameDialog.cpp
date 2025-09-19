@@ -5,3 +5,12 @@ NewGameDialog::NewGameDialog() : wxDialog(nullptr, wxID_ANY, "New Game"){
 
     ShowModal();
 }
+
+
+void NewGameDialog::setup_widgets(){
+
+}
+
+void NewGameDialog::setup_sizers(){
+
+}
