@@ -18,10 +18,13 @@ set(wxUSE_EXPAT OFF)
 set(wxUSE_LIBTIFF OFF)
 set(wxUSE_LIBWEBP OFF)
 
+find_package(X11 REQUIRED)
+#include_directories(${X11_INCLUDE_DIR})
+
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/App.cpp
     ${PROJECT_SOURCE_DIR}/MainFrame.cpp
     ${PROJECT_SOURCE_DIR}/NewGameDialog.cpp)
 
 add_subdirectory(libs/wxWidgets-3.3.0)
 
-target_link_libraries(${PROJECT_NAME} wx::core wx::base)
+target_link_libraries(${PROJECT_NAME} wx::core wx::base X11::X11)

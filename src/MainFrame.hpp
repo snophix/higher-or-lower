@@ -28,8 +28,8 @@ constexpr std::string BUTTON_GUESS = "Guess";
 constexpr std::string BUTTON_REPLAY = "Replay";
 
 constexpr int RANDOM_MIN = 0;
-constexpr int RANDOM_MAX = 100;
-constexpr int NUMBER_OF_TRIES = 5;
+constexpr int DEFAULT_RANDOM_MAX = 100;
+constexpr int DEFAULT_NUMBER_OF_TRIES = 5;
 
 
 constexpr std::string RES_TESTING = "../res/";
@@ -46,6 +46,8 @@ enum MenuIDs{
 class MainFrame : public wxFrame{
 private:
     bool isGaming;
+    int randomMax;
+    int maxTries;
     int randomNumberToGuess;
     int triesLeft;
 

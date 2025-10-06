@@ -13,6 +13,8 @@ int random_int(int min, int max);
 
 
 MainFrame::MainFrame() : wxFrame(NULL, wxID_ANY, "Higher Or Lower", wxDefaultPosition, wxSize(500, 500), wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE)) {
+    randomMax = NORMAL_MAX;
+    maxTries = NORMAL_TRIES;
     // the main panel that manages evrything
     mainPanel = new wxPanel(this);
 
@@ -46,7 +48,7 @@ void MainFrame::setup_widgets() {
 
     // the number picker
     numberPicherSpinCtrl = new wxSpinCtrl(mainPanel);
-    numberPicherSpinCtrl->SetRange(RANDOM_MIN, RANDOM_MAX);
+    numberPicherSpinCtrl->SetRange(RANDOM_MIN, randomMax);
 
     // the main button
     mainButton = new wxButton(mainPanel, wxID_ANY, "Guess");
@@ -98,8 +100,9 @@ void MainFrame::setup_binds(){
 void MainFrame::reset_game(){
     // initializing
     isGaming = true;
-    randomNumberToGuess = random_int(RANDOM_MIN, RANDOM_MAX);
-    triesLeft = NUMBER_OF_TRIES;
+    randomNumberToGuess = random_int(RANDOM_MIN, randomMax);
+    triesLeft = maxTries;
+    numberPicherSpinCtrl->SetRange(RANDOM_MIN, randomMax);
     // setting the different strings
     SetTitle(TITLE_BASE + TITLE_ADD_BEGIN);
     messageText->SetLabel(MESSAGE_BEGIN);
@@ -169,14 +172,21 @@ void MainFrame::on_mainButton_pressed(wxCommandEvent& event){
 
 
 void MainFrame::on_new_game(wxCommandEvent& event){
-    NewGameDialog NewGameDialog;
+    NewGameDialog newGameDialog(this, wxID_ANY);
+    if (newGameDialog.ShowModal() == wxID_OK){
+        NewGameInput input = newGameDialog.get_user_input();
+        randomMax = input.maxNumberToGuess;
+        maxTries = input.maxTries;
+
+        reset_game();
+    }
 }
 
 
 void MainFrame::on_about(wxCommandEvent& event){
     wxAboutDialogInfo aboutDialog;
     //aboutDialog.SetName();
-    aboutDialog.SetVersion("Beta 1.1.0");
+    aboutDialog.SetVersion("Beta 1.2.0");
     aboutDialog.SetDescription("A simple game to pass time.");
     aboutDialog.SetCopyright("(C) 2025 Moulay Ali \"Snophix\" Balouz");
     wxAboutBox(aboutDialog);
